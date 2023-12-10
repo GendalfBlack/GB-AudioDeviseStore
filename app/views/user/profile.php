@@ -5,7 +5,8 @@
 </head>
 <body>
 <h1>Welcome to Your Profile</h1>
-<?php if ($userData): ?>
+<?php /** @var User $userData */
+if ($userData): ?>
     <p>Username: <?php echo $userData['username']; ?></p>
     <p>Email: <?php echo $userData['email']; ?></p>
     <a href="<?php echo $_SERVER['REQUEST_URI']?>">Logout</a> <!-- Link for logout -->
