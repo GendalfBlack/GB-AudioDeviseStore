@@ -4,8 +4,13 @@
     <title>User Profile</title>
 </head>
 <body>
-    <h1>Welcome to Your Profile</h1>
-    <p>Username: <?php echo isset($user['username']) ? $user['username'] : ''; ?></p>
-    <p>Email: <?php echo isset($user['email']) ? $user['email'] : ''; ?></p>
+<h1>Welcome to Your Profile</h1>
+<?php if ($userData): ?>
+    <p>Username: <?php echo $userData['username']; ?></p>
+    <p>Email: <?php echo $userData['email']; ?></p>
+    <a href="<?php echo $_SERVER['REQUEST_URI']?>">Logout</a> <!-- Link for logout -->
+<?php else: ?>
+    <p>User data not available</p>
+<?php endif; ?>
 </body>
 </html>

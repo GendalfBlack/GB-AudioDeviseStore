@@ -1,5 +1,5 @@
 <?php
-require_once('../config.php');
+require_once(__DIR__ . '/../config.php');
 
 class User {
     private $db;
@@ -47,6 +47,13 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC); // Returns user details or false if not found
     }
 
-    // Other methods for updating user profile, deleting users, etc. can be added here...
+    public function getUserById($userId) {
+        $query = "SELECT * FROM Users WHERE user_id = :user_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Returns user details or false if not found
+    }
 }
 

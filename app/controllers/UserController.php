@@ -1,5 +1,6 @@
 <?php
-require_once('../models/User.php');
+require_once(__DIR__ . '/../models/User.php');
+require_once(__DIR__ . '/../config.php');
 
 class UserController {
     public function login() {
@@ -18,9 +19,13 @@ class UserController {
                 $user = $userModel->authenticateUser($username, $password);
 
                 if ($user) {
-                    // User authenticated, set session or cookie
-                    // Redirect to user profile or dashboard
-                    header("Location: profile.php");
+                    // Start session and store user ID after successful login
+                    session_start();
+                    $_SESSION['user_id'] = $user['user_id']; // Assuming user ID is retrieved from the database during authentication
+
+                    // Redirect user to profile page
+                    $userController = new UserController();
+                    $userController->viewProfile();
                     exit;
                 } else {
                     // Authentication failed, display error
@@ -30,9 +35,15 @@ class UserController {
                 $error = "Username and password are required";
             }
         }
+        include(__DIR__ . '/../views/user/login.php');
+    }
+    public function viewProfile() {
+        // Assume you have a method in your User model to get user data by ID
+        $userId = $_SESSION['user_id']; // Assuming you store user ID in the session
+        $userModel = new User();
+        $userData = $userModel->getUserById($userId); // Retrieve user data
 
-        // Load the login view
-        include('../views/user/login.php');
+        include(__DIR__ . '/../views/user/profile.php'); // Pass $userData to the view
     }
 
     public function register() {
@@ -60,7 +71,7 @@ class UserController {
 
                     if ($user) {
                         // User created successfully, redirect to login page
-                        header("Location: login.php");
+                        header("Location: ../app/views/user/login.php");
                         exit;
                     } else {
                         $error = "Failed to create user";
@@ -70,11 +81,7 @@ class UserController {
                 $error = "All fields are required";
             }
         }
-
-        // Load the register view
-        include('../views/user/register.php');
+        include(__DIR__ . '/../views/user/register.php');
     }
-
-    // Other user-related methods like profile update, logout, etc. can be added here...
 }
 

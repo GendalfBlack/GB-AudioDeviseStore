@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Login</h1>
-<form action="../../controllers/UserController.php?action=login" method="POST">
+<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required><br><br>
 
