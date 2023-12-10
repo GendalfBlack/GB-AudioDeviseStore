@@ -19,8 +19,6 @@ class UserController {
                 $user = $userModel->authenticateUser($username, $password);
 
                 if ($user) {
-                    // Start session and store user ID after successful login
-                    session_start();
                     $_SESSION['user_id'] = $user['user_id']; // Assuming user ID is retrieved from the database during authentication
 
                     // Redirect user to profile page
@@ -71,7 +69,7 @@ class UserController {
 
                     if ($user) {
                         // User created successfully, redirect to login page
-                        header("Location: ../app/views/user/login.php");
+                        header("Location: ../public/index.php?action=login");
                         exit;
                     } else {
                         $error = "Failed to create user";

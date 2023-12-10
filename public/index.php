@@ -14,7 +14,6 @@ $userController = new UserController();
 
 // Route to appropriate controller action based on the action parameter
 switch ($action) {
-
     case 'login':
         $userController->login();
         break;
