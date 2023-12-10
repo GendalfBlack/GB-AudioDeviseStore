@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Welcome to Your Profile</h1>
-<?php /** @var User $userData */
+<?php /** @var User $userData */ // tells PHPStorm that $userData is a User type
 if ($userData): ?>
     <p>Username: <?php echo $userData['username']; ?></p>
     <p>Email: <?php echo $userData['email']; ?></p>
