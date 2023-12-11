@@ -9,6 +9,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to the login page (index.php) using a relative path
-header("Location: ../../../index.php");
+header("Location: ../../../public/index.php");
 exit;
 

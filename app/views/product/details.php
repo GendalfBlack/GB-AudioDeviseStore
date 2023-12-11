@@ -6,12 +6,13 @@
 </head>
 <body>
 <h1>Product Details</h1>
-<?php if ($productData): ?>
+<?php /** @var Product $productData */
+if ($productData): ?>
     <h2><?php echo $productData['product_name']; ?></h2>
     <p>Category: <?php echo $productData['category_name']; ?></p>
     <p>Price: $<?php echo $productData['price']; ?></p>
     <p>Description: <?php echo $productData['description']; ?></p>
-    <!-- Other product details to display -->
+    <a href="../../../../MySite/public/index.php">Back to Product List</a>
 <?php else: ?>
     <p>Product details not available</p>
 <?php endif; ?>

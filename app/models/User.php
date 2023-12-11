@@ -2,11 +2,18 @@
 require_once(__DIR__ . '/../config.php');
 
 class User {
+    private static $instance = null;
     private $db;
 
     public function __construct() {
         $this->db = new PDO(DB_CONNECTION, DB_USER, DB_PASSWORD);
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    public static function getInstance() {
+        if (!self::$instance) {
+            self::$instance = new User();
+        }
+        return self::$instance;
     }
 
     public function authenticateUser($username, $password) {

@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../app/controllers/UserController.php');
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 // Initialize the UserController
-$userController = new UserController();
+$userController = UserController::getInstance();
 $productController = new ProductController();
 
 // Route to appropriate controller action based on the action parameter
