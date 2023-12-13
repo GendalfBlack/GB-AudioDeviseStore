@@ -21,8 +21,7 @@ if (isset($_SESSION['user_id'])) {
             <h1>Welcome to Your Profile</h1>
             <p>Username: <?php echo $userData['username']; ?></p>
             <p>Email: <?php echo $userData['email']; ?></p>
-            <a href="../../../../MySite/public/index.php">Back to Product List</a>
-            <br>
+            <a href="../../../../MySite/public/index.php">Back to Product List</a><br><br>
             <a href="../../../../MySite/app/views/user/logout.php">Logout</a>
             </body>
             </html>
