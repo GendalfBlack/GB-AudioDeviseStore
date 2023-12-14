@@ -8,7 +8,6 @@
 <h1>Your Basket</h1>
 <p>Product added to basket!</p>
 
-<!-- Display the list of products in the basket -->
 <table>
     <thead>
     <tr>

@@ -20,10 +20,10 @@ class User {
         $query = "SELECT * FROM Users WHERE username = :username AND password = :password";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password); // For actual usage, use password hashing
+        $stmt->bindParam(':password', $password);
 
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Returns user details if authenticated, otherwise false
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function createUser($username, $email, $password) {
@@ -31,9 +31,9 @@ class User {
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password); // For actual usage, use password hashing
+        $stmt->bindParam(':password', $password);
 
-        return $stmt->execute(); // Returns true if user creation is successful, otherwise false
+        return $stmt->execute();
     }
 
     public function getUserByUsername($username) {
@@ -42,7 +42,7 @@ class User {
         $stmt->bindParam(':username', $username);
 
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Returns user details or false if not found
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getUserByEmail($email) {
@@ -51,7 +51,7 @@ class User {
         $stmt->bindParam(':email', $email);
 
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Returns user details or false if not found
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getUserById($userId) {
@@ -60,7 +60,7 @@ class User {
         $stmt->bindParam(':user_id', $userId);
 
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Returns user details or false if not found
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
 

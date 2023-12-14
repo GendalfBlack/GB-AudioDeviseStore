@@ -28,17 +28,21 @@ class Order
         $stmt->bindParam(':total_amount', $total_amount);
         $stmt->bindParam(':finished', $finished, PDO::PARAM_BOOL);
 
-        return $stmt->execute(); // Returns true if order creation is successful, otherwise false
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return ($result !== false && isset($result['order_id'])) ? $result['order_id'] : null;
     }
 
     public function getUserOrder($user_id)
     {
-        $query = "SELECT * FROM orders WHERE user_id = :user_id AND finished = false";
+        $query = "SELECT order_id FROM orders WHERE user_id = :user_id AND finished = false";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':user_id', $user_id);
 
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC)[0]['order_id']; // Returns array of user's orders or empty array if none found
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return ($result !== false && isset($result['order_id'])) ? $result['order_id'] : null;
     }
 
     public function getOrderItem($product_id,$order_id)
@@ -61,22 +65,7 @@ class Order
         $stmt->bindParam(':new_quantity', $newQuantity);
         $stmt->bindParam(':order_item_id', $orderItemId);
 
-        return $stmt->execute(); // Execute the update query
-    }
-
-    public function addItemToBasket($orderId, $productId, $quantity)
-    {
-        // Check if the product already exists in the order
-        $existingItem = $this->getOrderItem($productId, $orderId);
-
-        if ($existingItem) {
-            // If the product exists, update the quantity of the existing order item
-            $newQuantity = $existingItem['quantity'] + $quantity;
-            return $this->updateOrderItemQuantity($existingItem['order_item_id'], $newQuantity);
-        } else {
-            // If the product does not exist, create a new order item
-            return $this->createOrderItem($orderId, $productId, $quantity);
-        }
+        return $stmt->execute();
     }
 
     public function createOrderItem($orderId, $productId, $quantity)
@@ -110,7 +99,6 @@ class Order
     public function completeOrder($orderId)
     {
         try {
-            // Update the order status to "finished" in the database
             $query = "UPDATE orders 
                       SET finished = true, 
                           total_amount = (SELECT SUM(p.price * oi.quantity) 
@@ -121,11 +109,10 @@ class Order
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':order_id', $orderId);
             $stmt->execute();
-
-            return true; // Return true if the update was successful
+            Order::$instance = null;
+            return true;
         } catch (PDOException $e) {
-            // Handle any exceptions or errors here
-            return false; // Return false if there was an error
+            return false;
         }
     }
 }

@@ -18,7 +18,6 @@
     <input type="submit" value="Register">
 </form>
 
-<!-- Display any error messages here -->
 <?php
 if (isset($error)) {
     echo '<p style="color: red;">' . $error . '</p>';

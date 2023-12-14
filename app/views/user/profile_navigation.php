@@ -8,4 +8,3 @@ if (!isset($_SESSION['user_id'])){
 else{
     echo '<a href="../../../../MySite/app/views/user/profile.php">Profile</a>';
 }
-?>

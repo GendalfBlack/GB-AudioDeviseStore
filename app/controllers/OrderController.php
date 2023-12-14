@@ -8,7 +8,7 @@ class OrderController {
     private $orderModel;
 
     public function __construct() {
-        $this->orderModel = new Order();
+        $this->orderModel = Order::getInstance();
     }
     public static function getInstance() {
         if (!self::$instance) {
@@ -17,11 +17,20 @@ class OrderController {
         return self::$instance;
     }
     public function getBasketItems($userId) {
-        // Logic to fetch basket items for the given user ID from the Order model
-        $order_id = Order::getInstance()->getUserOrder($userId);
-        return $this->orderModel->getBasketItems($userId, $order_id);
+        $orderId = $this->orderModel->getUserOrder($userId);
+        return $this->orderModel->getBasketItems($userId, $orderId);
     }
+    public function addItemToBasket($userId, $productId, $quantity)
+    {
+        $orderId = $this->orderModel->getUserOrder($userId);
+        $existingItem = $this->orderModel->getOrderItem($productId, $orderId);
 
-// Additional methods like updating orders, deleting orders, etc. can be added here
+        if ($existingItem) {
+            $newQuantity = $existingItem['quantity'] + $quantity;
+            return $this->orderModel->updateOrderItemQuantity($existingItem['order_item_id'], $newQuantity);
+        } else {
+            return $this->orderModel->createOrderItem($orderId, $productId, $quantity);
+        }
+    }
 }
 
