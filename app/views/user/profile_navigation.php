@@ -7,4 +7,6 @@ if (!isset($_SESSION['user_id'])){
 }
 else{
     echo '<a href="../../../../MySite/app/views/user/profile.php">Profile</a>';
+    echo "<br><br>";
+    echo '<a href="../../../../MySite/app/views/order/order_view.php">Shoping Basket</a>';
 }

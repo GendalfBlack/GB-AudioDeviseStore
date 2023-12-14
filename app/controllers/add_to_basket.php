@@ -6,11 +6,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../public/index.php?action=login");
+    header("Location: ". __DIR__ ."../../public/index.php?action=login");
     exit;
 }
 $orderModel = Order::getInstance();
-$userId = $_SESSION['user_id'];
 $orderController = OrderController::getInstance();
 
 if (isset($_GET['product_id'])) {
@@ -30,12 +29,11 @@ if (isset($_GET['product_id'])) {
         $newQuantity = $existingItem['quantity'] + $quantity;
         $orderModel->updateOrderItemQuantity($existingItem['order_item_id'], $newQuantity);
     } else {
-        $orderController->addItemToBasket($userId, $productId, $quantity);
+        $orderController->addItemToBasket($_SESSION['user_id'], $productId, $quantity);
     }
 } else {
     echo "Product ID not provided.";
     exit;
 }
-$basketItems = $orderController->getBasketItems($userId);
 
 include('../views/order/order_view.php');
