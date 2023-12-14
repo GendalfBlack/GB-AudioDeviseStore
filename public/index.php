@@ -1,7 +1,8 @@
 <?php
 // Start the session (if not started already)
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Include the config file and controller
 require_once(__DIR__ . '/../app/config.php');
 require_once(__DIR__ . '/../app/controllers/ProductController.php');

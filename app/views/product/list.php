@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php
-    include (__DIR__ . '/../user/profileNavigation.php')
+    include (__DIR__ . '/../user/profile_navigation.php')
 ?>
 <h1>Product List</h1>
 
@@ -28,6 +28,8 @@ if ($products && count($products) > 0) {
 
         // Link/button to view details of this product
         echo "<a href=".$_SERVER['REQUEST_URI']."?action=view_product&id={$product['product_id']}>View Details</a>";
+        echo "<br><br>";
+        echo "<a href=".$_SERVER['REQUEST_URI']."/../../app/controllers/add_to_basket.php?product_id=".$product['product_id'].">Add to Basket</a>";
     }
 } else {
     echo "<p>No products found</p>";
