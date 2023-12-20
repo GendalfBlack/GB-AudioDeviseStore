@@ -24,7 +24,8 @@ if ($products && count($products) > 0) {
 
         echo "<a href=".$_SERVER['REQUEST_URI']."?action=view_product&id={$product['product_id']}>View Details</a>";
         echo "<br><br>";
-        echo "<a href=".$_SERVER['REQUEST_URI']."/../../app/controllers/add_to_basket.php?product_id=".$product['product_id'].">Add to Basket</a>";
+        echo "<a href='../app/controllers/add_to_basket.php?product_id=".$product['product_id']."'>Add to Basket</a>";
+
     }
 } else {
     echo "<p>No products found</p>";

@@ -1,12 +1,12 @@
 <?php
-require_once(__DIR__ . '/OrderController.php');
-require_once(__DIR__ . '/../models/Order.php');
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once(__DIR__ . '/OrderController.php');
+require_once(__DIR__ . '/../models/Order.php');
+
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ". __DIR__ ."../../public/index.php?action=login");
+    header("Location: /MySite/public/index.php?action=login");
     exit;
 }
 $orderModel = Order::getInstance();
