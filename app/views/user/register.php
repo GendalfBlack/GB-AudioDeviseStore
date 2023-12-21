@@ -2,27 +2,29 @@
 <html lang="uk">
 <head>
     <title>Register</title>
+    <link rel="stylesheet" href="../../MySite/public/css/styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-<h1>Register</h1>
-<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
+<header>
+    <h1>Register</h1>
+</header>
+<main>
+    <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" class="register-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <input type="submit" value="Register" class="btn">
+    </form>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br><br>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
-
-    <input type="submit" value="Register">
-</form>
-
-<?php
-if (isset($error)) {
-    echo '<p style="color: red;">' . $error . '</p>';
-}
-?>
+    <?php
+    if (isset($error)) {
+        echo '<p class="error-message">' . $error . '</p>';
+    }
+    ?>
+</main>
 </body>
 </html>
 

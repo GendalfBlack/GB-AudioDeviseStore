@@ -3,52 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Your Basket</title>
+    <link rel="stylesheet" href="<?php echo "../../../MySite/public/css/styles.css";?>">
+    <link rel="stylesheet" href="<?php echo "../../../../MySite/public/css/styles.css";?>">
 </head>
 <body>
+<header>
+    <?php include (__DIR__ . '/../user/profile_navigation.php') ?>
+</header>
 <h1>Your Basket</h1>
-    <?php
-    require_once(__DIR__ . '/../../controllers/OrderController.php');
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    $totalAmount = 0;
+<?php
+require_once(__DIR__ . '/../../controllers/OrderController.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$totalAmount = 0;
 
-    $orderController = OrderController::getInstance();
-    $basketItems = $orderController->getBasketItems($_SESSION['user_id']);
+$orderController = OrderController::getInstance();
+$basketItems = $orderController->getBasketItems($_SESSION['user_id']);
 
-    if (count($basketItems) > 0){
-        foreach ($basketItems as $item):
-     ?>
-    <table>
+if (count($basketItems) > 0):
+    ?>
+    <table class="basket-table">
         <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
         </thead>
         <tbody>
+        <?php foreach ($basketItems as $item): ?>
             <tr>
-                <td><?php echo $item['product_name']; ?></td>
-                <td><?php echo $item['quantity']; ?></td>
-                <td><?php echo $item['price']; ?></td>
-                <td><?php echo $item['quantity'] * $item['price']; $totalAmount+= $item['quantity'] * $item['price'];?></td>
+                <td>
+                    <img src="https://placehold.co/300?text=Placeholder&font=roboto" alt="Product Image" class="product-thumbnail">
+                    <?php echo $item['product_name']; ?>
+                </td>
+                <td class="center">
+                    <button class="quantity-btn" data-action="decrement">-</button>
+                    <?php echo $item['quantity']; ?>
+                    <button class="quantity-btn" data-action="increment">+</button>
+                </td>
+                <td>$<?php echo $item['price']; ?></td>
+                <td>$<?php $total = $item['quantity'] * $item['price']; echo $total; $totalAmount += $total; ?></td>
             </tr>
+        <?php endforeach; ?>
+        <tr>
+            <td colspan="3"><strong>Total Amount:</strong></td>
+            <td><strong>$<?php echo $totalAmount; ?></strong></td>
+        </tr>
         </tbody>
     </table>
-    <p>Total Amount: <?php echo $totalAmount; ?></p>
-
     <form action="order_complete.php" method="POST">
         <input type="hidden" name="order_id" value="123">
-        <input type="submit" value="Complete Order">
+        <input type="submit" value="Complete Order" class="complete-order-btn">
     </form>
-    <?php endforeach;
-    }else{
-        echo "<p>Your basket is empty!</p>";
-    }
-    ?>
-
-<a href="/MySite/public/index.php">Continue Shopping</a>
+    <form action="/MySite/public/index.php?action=decline" method="GET">
+        <input type="hidden" name="action" value="decline_order">
+        <input type="submit" value="Decline Order" class="decline-order-btn">
+    </form>
+<?php else: ?>
+    <p>Your basket is empty!</p>
+<?php endif; ?>
+<a href="/MySite/public/index.php" class="continue-shopping-link">Continue Shopping</a>
 </body>
 </html>
