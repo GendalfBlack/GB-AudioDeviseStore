@@ -32,5 +32,13 @@ class OrderController {
             return $this->orderModel->createOrderItem($orderId, $productId, $quantity);
         }
     }
+    public function declineOrder($orderId)
+    {
+        return $this->orderModel->declineOrder($orderId);
+    }
+    public function getUserOrder($userId)
+    {
+        return $this->orderModel->getUserOrder($userId);
+    }
 }
 

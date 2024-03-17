@@ -9,6 +9,7 @@
 <body>
 <header>
     <?php include (__DIR__ . '/../user/profile_navigation.php') ?>
+    <script src="../../public/js/search.js" defer></script>
 </header>
 <h1>Your Basket</h1>
 <?php
@@ -20,6 +21,7 @@ $totalAmount = 0;
 
 $orderController = OrderController::getInstance();
 $basketItems = $orderController->getBasketItems($_SESSION['user_id']);
+$orderId = $orderController->getUserOrder($_SESSION['user_id']);
 
 if (count($basketItems) > 0):
     ?>
@@ -40,9 +42,19 @@ if (count($basketItems) > 0):
                     <?php echo $item['product_name']; ?>
                 </td>
                 <td class="center">
-                    <button class="quantity-btn" data-action="decrement">-</button>
-                    <?php echo $item['quantity']; ?>
-                    <button class="quantity-btn" data-action="increment">+</button>
+                    <div class="quantity-container">
+                        <form action="add_to_basket.php" method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
+                            <input type="hidden" name="action" value="decrement">
+                            <button type="submit" class="quantity-btn decrement-btn">-</button>
+                        </form>
+                        <span class="quantity"> <?php echo $item['quantity']; ?> </span>
+                        <form action="add_to_basket.php" method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
+                            <input type="hidden" name="action" value="increment">
+                            <button type="submit" class="quantity-btn increment-btn">+</button>
+                        </form>
+                    </div>
                 </td>
                 <td>$<?php echo $item['price']; ?></td>
                 <td>$<?php $total = $item['quantity'] * $item['price']; echo $total; $totalAmount += $total; ?></td>
@@ -60,6 +72,7 @@ if (count($basketItems) > 0):
     </form>
     <form action="/MySite/public/index.php?action=decline" method="GET">
         <input type="hidden" name="action" value="decline_order">
+        <input type="hidden" name="order_id" value="<?php echo $orderId; ?>">
         <input type="submit" value="Decline Order" class="decline-order-btn">
     </form>
 <?php else: ?>

@@ -15,7 +15,6 @@ if ($productData): ?>
     <div class="product-details-page">
         <h2><?php echo $productData['product_name']; ?></h2>
         <div class="image-carousel">
-            <!-- Placeholder image -->
             <img src="https://placehold.co/300?text=Placeholder&font=roboto" alt="Product Image Placeholder" class="main-image">
             <div class="carousel-controls">
                 <button class="prev-btn" disabled>&lt;</button>

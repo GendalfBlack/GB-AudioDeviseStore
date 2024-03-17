@@ -67,7 +67,17 @@ class Order
 
         return $stmt->execute();
     }
-
+    public function removeOrderItem($orderItemId)
+    {
+        try {
+            $query = "DELETE FROM order_items WHERE order_item_id = :order_item_id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':order_item_id', $orderItemId);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
     public function createOrderItem($orderId, $productId, $quantity)
     {
         $query = "INSERT INTO order_items (order_id, product_id, quantity) VALUES (:order_id, :product_id, :quantity)";
@@ -109,6 +119,25 @@ class Order
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':order_id', $orderId);
             $stmt->execute();
+            Order::$instance = null;
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function declineOrder($orderId)
+    {
+        try {
+            $deleteQuery = "DELETE FROM order_items WHERE order_id = :order_id";
+            $deleteStmt = $this->db->prepare($deleteQuery);
+            $deleteStmt->bindParam(':order_id', $orderId);
+            $deleteStmt->execute();
+
+            $updateQuery = "UPDATE orders SET finished = true WHERE order_id = :order_id";
+            $updateStmt = $this->db->prepare($updateQuery);
+            $updateStmt->bindParam(':order_id', $orderId);
+            $updateStmt->execute();
+
             Order::$instance = null;
             return true;
         } catch (PDOException $e) {

@@ -14,7 +14,8 @@ if (isset($_SESSION['user_id'])) {
         <html lang="uk">
         <head>
             <title>User Profile</title>
-            <link rel="stylesheet" href="../../MySite/public/css/styles.css"> <!-- Link to your CSS file -->
+            <link rel="stylesheet" href="../../MySite/public/css/styles.css">
+            <link rel="stylesheet" href="../../../../MySite/public/css/styles.css">
         </head>
         <body>
         <header>

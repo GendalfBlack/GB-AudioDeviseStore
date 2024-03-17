@@ -1,9 +1,10 @@
 <div class="logo">
     ShopName
 </div>
-<div class="search-container">
-    <input type="text" placeholder="Search..." class="search-input">
-    <button class="search-btn">Search</button>
+<div class="search-container" id="search-container">
+    <input type="text" id="search-input" placeholder="Search..." class="search-input">
+    <button id="search-btn" class="search-btn">Search</button>
+    <button id="clear-btn" class="search-btn">Clear</button>
 </div>
 <div class="nav-links">
     <?php
@@ -17,7 +18,7 @@
             }
         } else {
             echo '<a href="../../../../MySite/app/views/user/profile.php" class="nav-link">Profile</a>';
-            echo '<a href="../../../../MySite/app/views/order/order_view.php" class="nav-link">Shopping Basket</a>';
+            echo '<a href="../app/controllers/add_to_basket.php" class="nav-link">Shopping Basket</a>';
         }
     ?>
 </div>
