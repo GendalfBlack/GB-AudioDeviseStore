@@ -1,15 +1,21 @@
-
+// Очікування завантаження DOM перед виконанням скрипту
 document.addEventListener('DOMContentLoaded', function() {
+    // Об'явлення об'єкта для зберігання кількості товарів за категоріями
     var categories = {};
+    // Перебір кожного товару для підрахунку кількості товарів за категоріями
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
+        // Якщо категорія товару ще не існує в об'єкті категорій, створити її з значенням 0
         if (!categories[product.category_name]) {
             categories[product.category_name] = 0;
         }
+        // Збільшення лічильника товарів у відповідній категорії
         categories[product.category_name]++;
     }
 
+    // Отримання елемента списку категорій
     var categoryList = document.querySelector('.category-list');
+    // Додавання кожної категорії у список
     for (var category in categories) {
         var listItem = document.createElement('li');
         var checkbox = document.createElement('input');
@@ -20,23 +26,26 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryList.appendChild(listItem);
     }
 
+    // Отримання всіх чекбоксів
     var checkboxes = document.querySelectorAll('.category-list input[type="checkbox"]');
     var productGrid = document.getElementById('product-grid');
 
+    // Додавання обробника подій для кожного чекбокса
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
             var selectedCategories = [];
+            // Збір вибраних категорій
             checkboxes.forEach(function(cb) {
                 if (cb.checked) {
                     selectedCategories.push(cb.value);
                 }
             });
 
+            // Якщо не вибрано жодної категорії, відображаємо всі товари
             if (selectedCategories.length === 0) {
-                // If no checkboxes are checked, display all products
                 updateProductGrid(products);
             } else {
-                // Filter products based on selected categories
+                // Фільтруємо товари за вибраними категоріями
                 var filteredProducts = products.filter(function(product) {
                     return selectedCategories.includes(product.category_name);
                 });
@@ -46,10 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Функція для оновлення сітки товарів
 function updateProductGrid(products) {
     var productGrid = document.getElementById('product-grid');
     productGrid.innerHTML = '';
 
+    // Додавання кожного товару до сітки
     products.forEach(function(product) {
         var productElement = document.createElement('div');
         productElement.classList.add('product');

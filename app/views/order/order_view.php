@@ -13,6 +13,7 @@
 </header>
 <h1>Your Basket</h1>
 <?php
+// Підключення контролера замовлень та перевірка сесії
 require_once(__DIR__ . '/../../controllers/OrderController.php');
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

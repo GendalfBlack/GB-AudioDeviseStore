@@ -1,12 +1,20 @@
 <?php
+// Перевірка наявності сесії
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Підключення моделі замовлення
 require_once(__DIR__ . '/../models/Order.php');
 
+// Обробка POST-запиту
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Перевірка існування екземпляра моделі замовлення
     if (Order::getInstance()) {
+        // Отримання ідентифікатора замовлення користувача
         $orderId = Order::getInstance()->getUserOrder($_SESSION['user_id']);
+
+        // Завершення замовлення
         $success = Order::getInstance()->completeOrder($orderId);
 
         if ($success) {
@@ -14,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../../public/index.php");
             exit;
         } else {
-            echo "Failed to complete the order. Please try again.";
+            echo "Не вдалося завершити замовлення. Будь ласка, спробуйте ще раз.";
         }
     } else {
-        echo "Order ID not provided.";
+        echo "Не наданий ідентифікатор замовлення.";
     }
 } else {
-    echo "Invalid request method.";
+    echo "Недійсний метод запиту.";
 }

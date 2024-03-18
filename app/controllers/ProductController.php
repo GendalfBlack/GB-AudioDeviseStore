@@ -5,22 +5,25 @@ class ProductController {
     /**
      * @var Product
      */
-    private $productModel;
+    private $productModel; // Модель продукту
 
     public function __construct() {
-        // Instantiate Product model when creating a ProductController instance
+        // Створення екземпляру моделі продукту при створенні об'єкта ProductController
         $this->productModel = new Product();
     }
+
     public function viewProductDetails($productId) {
-        // Fetch product details from the Product model
+        // Отримання даних про продукт з моделі продукту
         $productData = $this->productModel->getProductById($productId);
 
-        // Include the details view file and pass the product data
+        // Підключення файлу вигляду з деталями продукту та передача даних про продукт
         include(__DIR__ . '/../views/product/details.php');
     }
+
     public function getAllProducts() {
-        // Fetch all products from the Product model
+        // Отримання всіх продуктів з моделі продукту
         return $this->productModel->getAllProducts();
     }
 }
+
 
