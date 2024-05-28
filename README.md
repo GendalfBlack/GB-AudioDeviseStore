@@ -20,8 +20,9 @@ AudioDeviseStore is a simple PHP project developed as a freelance educational as
 2. Set up your local PHP environment.
 3. Import the database:
 - Open PHPMyAdmin.
-- Create a new database.
-- Import the provided SQL file into the newly created database.
+- Create a new database "audio_web_store".
+- Import the provided [database_schema.sql](demo/database_schema.sql) file into your MySQL database.
+
 
 ## Usage Instructions
 This project is for free use and serves as a demonstration of basic concepts. Feel free to explore the functionalities, including product filtering, simple basket and ordering logic, registration, and user profile management.
